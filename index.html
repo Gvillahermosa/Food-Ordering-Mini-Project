@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="css/home.css" />
 </head>
 <body>
-
   <!-- Header -->
   <header class="te-header">
     <div class="te-header__left">
@@ -19,8 +18,9 @@
 
     <div class="te-header__right">
       <div class="te-actions">
-        <button class="te-icon-btn" aria-label="account" onclick="logout()" title="Logout">
-          <img src="assets/icons/logout.png" class="logout_icon" alt="logout">
+        <button class="te-icon-btn te-icon-btn--label" onclick="logout()" title="Logout">
+          <img src="assets/icons/logout.png" class="logout_icon" alt="">
+          <span>Logout</span>
         </button>
         <button class="te-cart-btn te-icon-btn" aria-label="cart" onclick="toggleCart()" title="Open cart">
           <span>🛒</span><b class="te-cart-count">0</b>
@@ -40,20 +40,19 @@
   <!-- Content -->
   <main class="te-shell">
     <section class="te-feed">
-      <h2 class="te-section-title">Your favorite restaurants</h2>
+      <h2 class="te-section-title">Your favorite couisine</h2>
 
       <!-- Category chips -->
       <div class="te-chips-scroll" id="categoryChips">
         <button class="te-chip te-chip--pill active" data-cat="chicken">Chicken</button>
         <button class="te-chip te-chip--pill" data-cat="burgers">Burgers</button>
         <button class="te-chip te-chip--pill" data-cat="coffee">Coffee</button>
-        <button class="te-chip te-chip--pill" data-cat="fried-chicken">Fried Chicken</button>
-        <button class="te-chip te-chip--pill" data-cat="milk-tea">Milk Tea</button>
+        <button class="te-chip te-chip--pill" data-cat="milk-tea">Desserts</button>
       </div>
 
       <!-- Selected category label -->
       <h2 class="te-section-title">
-        Recommended for you • <span id="selectedCategory">Chicken</span>
+        Recommended for you: <span id="selectedCategory">Chicken</span>
       </h2>
 
       <!-- Cards grid -->
@@ -70,70 +69,123 @@
         <button class="close-cart" onclick="toggleCart(false)" aria-label="Close cart">×</button>
       </div>
 
+      <!-- Scrollable area (cart items + fulfillment + payment) -->
       <div class="cart-content" id="cartContent">
         <div class="empty-cart">
           <div class="empty-cart-icon">🛒</div>
           <p>Your cart is empty</p>
         </div>
-      </div>
 
-      <!-- Checkout Section -->
-      <div class="section hidden" id="checkout">
-        <h3>💳 Checkout</h3>
+        <!-- Fulfillment -->
+        <section class="section" id="fulfillmentSection">
+          <h3>🛵 Fulfillment</h3>
+          <p class="muted">Choose how you want to receive your order.</p>
+          <div class="radio-cards">
+            <label class="radio-card">
+              <input type="radio" name="fulfillment" value="delivery" checked>
+              <div class="radio-card__body">
+                <div class="radio-emoji">🚚</div>
+                <div class="radio-title">Delivery</div>
+                <small>Have it brought to your address</small>
+              </div>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="fulfillment" value="pickup">
+              <div class="radio-card__body">
+                <div class="radio-emoji">🏪</div>
+                <div class="radio-title">Pickup</div>
+                <small>Pick up at a nearby branch</small>
+              </div>
+            </label>
+          </div>
+        </section>
 
-        <p class="muted">Choose a payment method:</p>
-
-        <!-- Payment option cards -->
-        <div class="payment-options">
-          <button class="pay-card selected" onclick="showcreditcardmodal()" data-pay="credit_card">
-            <span class="pay-emoji">💳</span>
-            <span class="pay-label">Credit Card</span>
-          </button>
-          <button class="pay-card" onclick="showpaypalmodal()" data-pay="paypal">
-            <span class="pay-emoji">🅿️</span>
-            <span class="pay-label">PayPal</span>
-          </button>
-          <button class="pay-card" onclick="showgcashmodal()" data-pay="gcash">
-            <span class="pay-emoji">📱</span>
-            <span class="pay-label">GCash</span>
-          </button>
-        </div>
-
-        <!-- Credit Card -->
-        <div class="payment" id="credit_card">
-          <h4>Card Details</h4>
+        <!-- Delivery Address -->
+        <section class="section" id="addressSection">
+          <h3>📍 Delivery Address</h3>
           <div class="form-grid">
-            <input id="cardholder" placeholder="Card Holder Name">
-            <input id="cardnumber" placeholder="Card Number" inputmode="numeric" autocomplete="cc-number" maxlength="19">
-            <input id="expdate" placeholder="Expiry (MM/YY)" inputmode="numeric" autocomplete="cc-exp" maxlength="5">
-            <input id="cvv" placeholder="CVV" inputmode="numeric" autocomplete="cc-csc" maxlength="4">
-            <input id="email" placeholder="Email" type="email" autocomplete="email">
+            <input id="addrFullName" placeholder="Full name">
+            <input id="addrPhone" placeholder="Phone" inputmode="tel" autocomplete="tel">
+            <input id="addrLine1" placeholder="House/Unit, Street" class="grid-span-2">
+            <input id="addrBarangay" placeholder="Barangay">
+            <input id="addrCity" placeholder="City/Municipality">
+            <input id="addrProvince" placeholder="Province">
+            <input id="addrNotes" placeholder="Rider notes (optional)" class="grid-span-2">
           </div>
-          <div class="cart-actions">
+        </section>
 
-          </div>
-        </div>
-
-        <!-- PayPal -->
-        <div class="payment hidden" id="paypal">
-          <h4>PayPal</h4>
+        <!-- Pickup Details -->
+        <section class="section hidden" id="pickupSection">
+          <h3>🏪 Pickup Details</h3>
           <div class="form-grid">
-            <input id="paypalEmail" placeholder="PayPal Email" type="email" autocomplete="email">
+            <select id="pickupBranch" class="select-input grid-span-2">
+              <option value="">Select pickup branch</option>
+              <option value="Downtown Branch">Downtown Branch</option>
+              <option value="City Mall">City Mall</option>
+              <option value="Uptown Center">Uptown Center</option>
+            </select>
+            <input id="pickupName" placeholder="Full name for pickup">
+            <input id="pickupPhone" placeholder="Phone" inputmode="tel" autocomplete="tel">
+            <input id="pickupTime" type="time" placeholder="Pickup time">
           </div>
-          <div class="cart-actions">
-          </div>
-        </div>
+        </section>
 
-        <!-- GCash -->
-        <div class="payment hidden" id="gcash">
-          <h4>GCash</h4>
-          <div class="form-grid">
-            <input id="gcashNumber" placeholder="GCash Number" inputmode="tel" autocomplete="tel" maxlength="11">
-            <input id="gcashEmail" placeholder="Email" type="email" autocomplete="email">
+        <!-- Checkout / Payment -->
+        <section class="section" id="checkout">
+          <h3>💳 Checkout</h3>
+          <p class="muted">Choose a payment method:</p>
+
+          <!-- Payment option cards -->
+          <div class="payment-options">
+            <button class="pay-card selected" data-pay="credit_card" onclick="choosePayment('credit_card')">
+              <span class="pay-emoji">💳</span><span class="pay-label">Credit Card</span>
+            </button>
+            <button class="pay-card" data-pay="paypal" onclick="choosePayment('paypal')">
+              <span class="pay-emoji">🅿️</span><span class="pay-label">PayPal</span>
+            </button>
+            <button class="pay-card" data-pay="gcash" onclick="choosePayment('gcash')">
+              <span class="pay-emoji">📱</span><span class="pay-label">GCash</span>
+            </button>
+            <button class="pay-card" data-pay="cod" onclick="choosePayment('cod')">
+              <span class="pay-emoji">💵</span><span class="pay-label">Cash on Delivery</span>
+            </button>
           </div>
-          <div class="cart-actions">
+
+          <!-- Credit Card -->
+          <div class="payment" id="credit_card">
+            <h4>Card Details</h4>
+            <div class="form-grid">
+              <input id="cardholder" placeholder="Card Holder Name">
+              <input id="cardnumber" placeholder="Card Number" inputmode="numeric" autocomplete="cc-number" maxlength="19">
+              <input id="expdate" placeholder="Expiry (MM/YY)" inputmode="numeric" autocomplete="cc-exp" maxlength="5">
+              <input id="cvv" placeholder="CVV" inputmode="numeric" autocomplete="cc-csc" maxlength="4">
+              <input id="email" placeholder="Email" type="email" autocomplete="email" class="grid-span-2">
+            </div>
           </div>
-        </div>
+
+          <!-- PayPal -->
+          <div class="payment hidden" id="paypal">
+            <h4>PayPal</h4>
+            <div class="form-grid">
+              <input id="paypalEmail" placeholder="PayPal Email" type="email" autocomplete="email" class="grid-span-2">
+            </div>
+          </div>
+
+          <!-- GCash -->
+          <div class="payment hidden" id="gcash">
+            <h4>GCash</h4>
+            <div class="form-grid">
+              <input id="gcashNumber" placeholder="GCash Number" inputmode="tel" autocomplete="tel" maxlength="11">
+              <input id="gcashEmail" placeholder="Email" type="email" autocomplete="email">
+            </div>
+          </div>
+
+          <!-- Cash on Delivery -->
+          <div class="payment hidden" id="cod">
+            <h4>Cash on Delivery</h4>
+            <p class="muted">Pay with cash when your order arrives. Please prepare the exact amount if possible.</p>
+          </div>
+        </section>
       </div>
 
       <!-- Footer -->
@@ -144,10 +196,13 @@
     </aside>
   </main>
 
+  
+
   <script src="javascript/home.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <footer>
-    <p>&copy; Hello World</p>
-</footer>
+    <p>&copy; TapnEat 2025</p>
+  </footer>
 </body>
 </html>
