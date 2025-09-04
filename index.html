@@ -15,22 +15,15 @@
         <span class="te-logo__mark">🍽️</span>
         <span class="te-logo__text">TapnEat</span>
       </div>
-
-      <nav class="te-nav">
-        <button class="te-tab te-tab--active">Delivery</button>
-        <button class="te-tab">Pick-up</button>
-        <button class="te-tab">Mart</button>
-        <button class="te-tab">Shops</button>
-      </nav>
     </div>
 
     <div class="te-header__right">
-
-
       <div class="te-actions">
-        <button class="te-icon-btn" aria-label="account" onclick="logout()" title="Logout"><img src="assets/icons/logout.png" class="logout_icon"></button>
-        <button class="te-cart-btn" aria-label="cart" onclick="toggleCart()" title="Open cart">
-          <span>🛒</span><b class="te-cart-count">1</b>
+        <button class="te-icon-btn" aria-label="account" onclick="logout()" title="Logout">
+          <img src="assets/icons/logout.png" class="logout_icon" alt="logout">
+        </button>
+        <button class="te-cart-btn te-icon-btn" aria-label="cart" onclick="toggleCart()" title="Open cart">
+          <span>🛒</span><b class="te-cart-count">0</b>
         </button>
       </div>
     </div>
@@ -39,279 +32,128 @@
   <!-- Sticky search -->
   <section class="te-searchbar">
     <div class="te-searchbar__wrap">
-      <input type="search" placeholder="Search restaurants or cuisines…" />
-      <button class="te-btn te-btn--ghost">Search</button>
+      <input id="searchInput" type="search" placeholder="Search restaurants or cuisines…" />
+      <button type="button" id="searchBtn" class="te-btn te-btn--ghost">Search</button>
     </div>
   </section>
 
   <!-- Content -->
   <main class="te-shell">
-    <!-- Filters (desktop) -->
-    <aside class="te-filters">
-      <h3 class="te-filters__title">Filters</h3>
-
-      <div class="te-filter-block">
-        <div class="te-filter-block__title">Sort by</div>
-        <label class="te-radio"><input type="radio" name="sort" checked /> Relevance</label>
-        <label class="te-radio"><input type="radio" name="sort" /> Fastest Delivery</label>
-        <label class="te-radio"><input type="radio" name="sort" /> Distance</label>
-        <label class="te-radio"><input type="radio" name="sort" /> Top rated</label>
-      </div>
-
-      <div class="te-filter-block">
-        <div class="te-filter-block__title">Quick filters</div>
-        <button class="te-chip">Ratings 4+</button>
-        <button class="te-chip">Deals</button>
-        <button class="te-chip">Accepts vouchers</button>
-      </div>
-
-      <div class="te-filter-block">
-        <div class="te-filter-block__title">Cuisines</div>
-        <div class="te-chips-wrap">
-          <button class="te-chip">Chicken</button>
-          <button class="te-chip">Burgers</button>
-          <button class="te-chip">Coffee</button>
-          <button class="te-chip">Japanese</button>
-          <button class="te-chip">Pizza</button>
-          <button class="te-chip">Milk Tea</button>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Main feed -->
     <section class="te-feed">
-      <h2 class="te-section-title">Your favorite cuisines</h2>
-      <div class="te-chips-scroll">
-        <button class="te-chip te-chip--pill">Chicken</button>
-        <button class="te-chip te-chip--pill">Burgers</button>
-        <button class="te-chip te-chip--pill">Coffee</button>
-        <button class="te-chip te-chip--pill">Fried Chicken</button>
-        <button class="te-chip te-chip--pill">Japanese</button>
-        <button class="te-chip te-chip--pill">Cakes</button>
-        <button class="te-chip te-chip--pill">Milk Tea</button>
+      <h2 class="te-section-title">Your favorite restaurants</h2>
+
+      <!-- Category chips -->
+      <div class="te-chips-scroll" id="categoryChips">
+        <button class="te-chip te-chip--pill active" data-cat="chicken">Chicken</button>
+        <button class="te-chip te-chip--pill" data-cat="burgers">Burgers</button>
+        <button class="te-chip te-chip--pill" data-cat="coffee">Coffee</button>
+        <button class="te-chip te-chip--pill" data-cat="fried-chicken">Fried Chicken</button>
+        <button class="te-chip te-chip--pill" data-cat="milk-tea">Milk Tea</button>
       </div>
 
-      <h2 class="te-section-title">Recommended for you</h2>
+      <!-- Selected category label -->
+      <h2 class="te-section-title">
+        Recommended for you • <span id="selectedCategory">Chicken</span>
+      </h2>
 
       <!-- Cards grid -->
-      <div class="te-grid">
-        <!-- Card -->
-        <article class="te-card">
-          <div class="te-card__media">
-            <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=1200&auto=format&fit=crop" alt="Starbucks store" />
-            <button class="te-like" aria-label="favorite"><img src="assets/icons/heart.png" style="width: 20px; height: 20px;"></button>
-          </div>
-          <div class="te-card__body">
-            <h3 class="te-card__title">Starbucks – Noble Place Binondo</h3>
-            <div class="te-meta">
-              <span>☕ Coffee</span>
-              <span>•</span>
-              <span>₱</span>
-              <span>•</span>
-              <span>5.0 (100+)</span>
-            </div>
-            <div class="te-submeta">
-              <span>15–30 min</span>
-              <span>•</span>
-              <span>₱19 fee</span>
-            </div>
-            <div class="te-card__cta">
-              <button class="te-btn te-btn--outline" data-open="itemModal">Open menu</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- Repeat some placeholder cards -->
-        <article class="te-card">
-          <div class="te-card__media">
-            <img src="https://images.unsplash.com/photo-1604908176997-4312242f6d1f?q=80&w=1200&auto=format&fit=crop" alt="Chicken" />
-            <button class="te-like" aria-label="favorite"><img src="assets/icons/heart.png" style="width: 20px; height: 20px;"></button>
-          </div>
-          <div class="te-card__body">
-            <h3 class="te-card__title">Chowking – Paterno</h3>
-            <div class="te-meta"><span>🍗 Fast Food</span><span>•</span><span>₱</span><span>•</span><span>5.0 (2000+)</span></div>
-            <div class="te-submeta"><span>15–30 min</span><span>•</span><span>₱19 fee</span></div>
-            <div class="te-card__cta">
-              <button class="te-btn te-btn--outline" data-open="itemModal">Open menu</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="te-card">
-          <div class="te-card__media">
-            <img src="https://images.unsplash.com/photo-1542835435-4a9b02198c62?q=80&w=1200&auto=format&fit=crop" alt="Pizza" />
-            <button class="te-like" aria-label="favorite"><img src="assets/icons/heart.png" style="width: 20px; height: 20px;"></button>
-          </div>
-          <div class="te-card__body">
-            <h3 class="te-card__title">Greenwich – Morayta</h3>
-            <div class="te-meta"><span>🍕 Pizza</span><span>•</span><span>₱₱</span><span>•</span><span>5.0 (5000+)</span></div>
-            <div class="te-submeta"><span>20–35 min</span><span>•</span><span>₱34 fee</span></div>
-            <div class="te-card__cta">
-              <button class="te-btn te-btn--outline" data-open="itemModal">Open menu</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="te-card">
-          <div class="te-card__media">
-            <img src="https://images.unsplash.com/photo-1542835435-4a9b02198c62?q=80&w=1200&auto=format&fit=crop" alt="Pizza" />
-            <button class="te-like" aria-label="favorite"><img src="assets/icons/heart.png" style="width: 20px; height: 20px;"></button>
-          </div>
-          <div class="te-card__body">
-            <h3 class="te-card__title">Greenwich – Morayta</h3>
-            <div class="te-meta"><span>🍕 Pizza</span><span>•</span><span>₱₱</span><span>•</span><span>5.0 (5000+)</span></div>
-            <div class="te-submeta"><span>20–35 min</span><span>•</span><span>₱34 fee</span></div>
-            <div class="te-card__cta">
-              <button class="te-btn te-btn--outline" data-open="itemModal">Open menu</button>
-            </div>
-          </div>
-        </article>
-           <article class="te-card">
-          <div class="te-card__media">
-            <img src="https://images.unsplash.com/photo-1542835435-4a9b02198c62?q=80&w=1200&auto=format&fit=crop" alt="Pizza" />
-            <button class="te-like" aria-label="favorite"><img src="assets/icons/heart.png" style="width: 20px; height: 20px;"></button>
-          </div>
-          <div class="te-card__body">
-            <h3 class="te-card__title">Greenwich – Morayta</h3>
-            <div class="te-meta"><span>🍕 Pizza</span><span>•</span><span>₱₱</span><span>•</span><span>5.0 (5000+)</span></div>
-            <div class="te-submeta"><span>20–35 min</span><span>•</span><span>₱34 fee</span></div>
-            <div class="te-card__cta">
-              <button class="te-btn te-btn--outline" data-open="itemModal">Open menu</button>
-            </div>
-          </div>
-        </article>
-           <article class="te-card">
-          <div class="te-card__media">
-            <img src="https://images.unsplash.com/photo-1542835435-4a9b02198c62?q=80&w=1200&auto=format&fit=crop" alt="Pizza" />
-            <button class="te-like" aria-label="favorite"><img src="assets/icons/heart.png" style="width: 20px; height: 20px;"></button>
-          </div>
-          <div class="te-card__body">
-            <h3 class="te-card__title">Greenwich – Morayta</h3>
-            <div class="te-meta"><span>🍕 Pizza</span><span>•</span><span>₱₱</span><span>•</span><span>5.0 (5000+)</span></div>
-            <div class="te-submeta"><span>20–35 min</span><span>•</span><span>₱34 fee</span></div>
-            <div class="te-card__cta">
-              <button class="te-btn te-btn--outline" data-open="itemModal">Open menu</button>
-            </div>
-          </div>
-        </article>
-        <article class="te-card">
-          <div class="te-card__media">
-            <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=1200&auto=format&fit=crop" alt="Starbucks store" />
-            <button class="te-like" aria-label="favorite"><img src="assets/icons/heart.png" style="width: 20px; height: 20px;"></button>
-          </div>
-          <div class="te-card__body">
-            <h3 class="te-card__title">Starbucks – Noble Place Binondo</h3>
-            <div class="te-meta">
-              <span>☕ Coffee</span>
-              <span>•</span>
-              <span>₱</span>
-              <span>•</span>
-              <span>5.0 (100+)</span>
-            </div>
-            <div class="te-submeta">
-              <span>15–30 min</span>
-              <span>•</span>
-              <span>₱19 fee</span>
-            </div>
-            <div class="te-card__cta">
-              <button class="te-btn te-btn--outline" data-open="itemModal">Open menu</button>
-            </div>
-          </div>
-        </article>
-        <article class="te-card">
-          <div class="te-card__media">
-            <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?q=80&w=1200&auto=format&fit=crop" alt="Starbucks store" />
-            <button class="te-like" aria-label="favorite"><img src="assets/icons/heart.png" style="width: 20px; height: 20px;"></button>
-          </div>
-          <div class="te-card__body">
-            <h3 class="te-card__title">Starbucks – Noble Place Binondo</h3>
-            <div class="te-meta">
-              <span>☕ Coffee</span>
-              <span>•</span>
-              <span>₱</span>
-              <span>•</span>
-              <span>5.0 (100+)</span>
-            </div>
-            <div class="te-submeta">
-              <span>15–30 min</span>
-              <span>•</span>
-              <span>₱19 fee</span>
-            </div>
-            <div class="te-card__cta">
-              <button class="te-btn te-btn--outline" data-open="itemModal">Open menu</button>
-            </div>
-          </div>
-        </article>
-        
-      </div>
+      <div class="te-grid" id="menu-grid"></div>
     </section>
 
-
-
+    <!-- Cart Overlay -->
     <div class="cart-overlay" id="cartOverlay" onclick="toggleCart(false)"></div>
 
-
     <!-- Cart Panel -->
-    <div class="cart-panel" id="cartPanel" aria-hidden="true">
-  <div class="cart-header">
-    <div class="cart-title">Your Order</div>
-    <button class="close-cart" onclick="toggleCart(false)" aria-label="Close cart">×</button>
-        </div>
-        <div class="cart-content" id="cartContent">
-            <div class="empty-cart">
-                <div class="empty-cart-icon">🛒</div>
-                <p>Your cart is empty</p>
-            </div>
-        </div>
-        <div class="cart-footer">
-            <div class="cart-total" id="cartTotal">Total: $0.00</div>
-            <button class="checkout-btn" id="checkoutBtn" onclick="" disabled>
-                Checkout
-            </button>
-        </div>
-    </div>
+    <aside class="cart-panel" id="cartPanel" aria-hidden="true">
+      <div class="cart-header">
+        <div class="cart-title">Your Order</div>
+        <button class="close-cart" onclick="toggleCart(false)" aria-label="Close cart">×</button>
+      </div>
 
+      <div class="cart-content" id="cartContent">
+        <div class="empty-cart">
+          <div class="empty-cart-icon">🛒</div>
+          <p>Your cart is empty</p>
+        </div>
+      </div>
 
+      <!-- Checkout Section -->
+      <div class="section hidden" id="checkout">
+        <h3>💳 Checkout</h3>
+        
+        <p class="muted">Choose a payment method:</p>
 
+        <!-- Payment option cards -->
+        <div class="payment-options">
+          <button class="pay-card selected" onclick="showcreditcardmodal()" data-pay="credit_card">
+            <span class="pay-emoji">💳</span>
+            <span class="pay-label">Credit Card</span>
+          </button>
+          <button class="pay-card" onclick="showpaypalmodal()" data-pay="paypal">
+            <span class="pay-emoji">🅿️</span>
+            <span class="pay-label">PayPal</span>
+          </button>
+          <button class="pay-card" onclick="showgcashmodal()" data-pay="gcash">
+            <span class="pay-emoji">📱</span>
+            <span class="pay-label">GCash</span>
+          </button>
+        </div>
+
+        <!-- Credit Card -->
+        <div class="payment" id="credit_card">
+          <h4>Card Details</h4>
+          <div class="form-grid">
+            <input id="cardholder" placeholder="Card Holder Name">
+            <input id="cardnumber" placeholder="Card Number" inputmode="numeric" autocomplete="cc-number" maxlength="19">
+            <input id="expdate" placeholder="Expiry (MM/YY)" inputmode="numeric" autocomplete="cc-exp" maxlength="5">
+            <input id="cvv" placeholder="CVV" inputmode="numeric" autocomplete="cc-csc" maxlength="4">
+            <input id="email" placeholder="Email" type="email" autocomplete="email">
+          </div>
+          <div class="cart-actions">
+
+          </div>
+        </div>
+
+        <!-- PayPal -->
+        <div class="payment hidden" id="paypal">
+          <h4>PayPal</h4>
+          <div class="form-grid">
+            <input id="paypalEmail" placeholder="PayPal Email" type="email" autocomplete="email">
+          </div>
+          <div class="cart-actions">
+          </div>
+        </div>
+
+        <!-- GCash -->
+        <div class="payment hidden" id="gcash">
+          <h4>GCash</h4>
+          <div class="form-grid">
+            <input id="gcashNumber" placeholder="GCash Number" inputmode="tel" autocomplete="tel" maxlength="11">
+            <input id="gcashEmail" placeholder="Email" type="email" autocomplete="email">
+          </div>
+          <div class="cart-actions">
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="cart-footer">
+        <div class="cart-total" id="cartTotal">Total: ₱0.00</div>
+        <button class="checkout-btn" id="checkoutBtn" disabled>Checkout</button>
+      </div>
+    </aside>
   </main>
 
   <!-- Floating cart bar (mobile) -->
   <div class="te-cartbar">
     <div class="te-cartbar__left">
-      <b>₱324.00</b>
+      <b id="mobileBarTotal">₱0.00</b>
       <small>(incl. fees & tax)</small>
     </div>
-    <button class="te-btn te-btn--primary">Checkout</button>
+    <button class="te-btn te-btn--primary" onclick="toggleCart(true)">Checkout</button>
   </div>
 
-
-
-  <!-- Minimal JS (optional) -->
-  <script>
-    // Modal open/close
-    document.querySelectorAll('[data-open]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.getAttribute('data-open');
-        document.getElementById(id).setAttribute('aria-hidden', 'false');
-        document.body.classList.add('no-scroll');
-      });
-    });
-    document.querySelectorAll('[data-close]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        btn.closest('.te-modal').setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('no-scroll');
-      });
-    });
-    // Qty controls
-    const qty = document.getElementById('qty');
-    document.querySelector('[data-inc]')?.addEventListener('click', () => {
-      qty.value = String(Math.min(99, (parseInt(qty.value || '1', 10) + 1)));
-    });
-    document.querySelector('[data-dec]')?.addEventListener('click', () => {
-      qty.value = String(Math.max(1, (parseInt(qty.value || '1', 10) - 1)));
-    });
-  </script>
-<script src="javascript/home.js"></script>
-
+  <script src="javascript/home.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
